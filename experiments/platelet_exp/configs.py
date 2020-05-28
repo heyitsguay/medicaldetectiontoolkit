@@ -155,7 +155,7 @@ class configs(DefaultConfigs):
         self.report_score_level = ['patient', 'rois']  # choose list from 'patient', 'rois'
         self.class_dict = {1: 'all'}  # 0 is background.
         self.patient_class_of_interest = 1  # patient metrics are only plotted for one class.
-        self.ap_match_ious = [0.1]  # list of ious to be evaluated for ap-scoring.
+        self.ap_match_ious = [0.1, 0.5, 0.7, 0.8, 0.9]  # list of ious to be evaluated for ap-scoring.
 
         self.model_selection_criteria = ['all_ap']  # criteria to average over for saving epochs.
         self.min_det_thresh = 0.1  # minimum confidence value to select predictions for evaluation.
@@ -276,8 +276,8 @@ class configs(DefaultConfigs):
         self.rpn_nms_threshold = 0.7 if self.dim == 2 else 0.7
 
         # loss sampling settings.
-        self.rpn_train_anchors_per_image = 64 #per batch element
-        self.train_rois_per_image = 20 #per batch element
+        self.rpn_train_anchors_per_image = 100 #per batch element
+        self.train_rois_per_image = 100 #per batch element
         self.roi_positive_ratio = 0.5
         self.anchor_matching_iou = 0.7
 
