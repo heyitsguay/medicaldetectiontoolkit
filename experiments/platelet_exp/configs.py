@@ -16,7 +16,6 @@
 
 import sys
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import numpy as np
 from default_configs import DefaultConfigs
@@ -82,8 +81,8 @@ class configs(DefaultConfigs):
         self.n_channels = len(self.channels)
 
         # patch_size to be used for training. pre_crop_size is the patch_size before data augmentation.
-        self.pre_crop_size_3D = [256, 256, 32]
-        self.patch_size_3D = [256, 256, 32]
+        self.pre_crop_size_3D = [288, 288, 40]
+        self.patch_size_3D = [288, 288, 40]
 
         self.patch_size = self.patch_size_3D
         self.pre_crop_size = self.pre_crop_size_3D
@@ -121,7 +120,7 @@ class configs(DefaultConfigs):
         #  Schedule / Selection #
         #########################
 
-        self.num_epochs = 25
+        self.num_epochs = 60
         self.num_train_batches = 50
         self.batch_size = 4
 
@@ -278,16 +277,16 @@ class configs(DefaultConfigs):
         # loss sampling settings.
         self.rpn_train_anchors_per_image = 100 #per batch element
         self.train_rois_per_image = 100 #per batch element
-        self.roi_positive_ratio = 0.5
+        self.roi_positive_ratio = 0.7
         self.anchor_matching_iou = 0.7
 
         # factor of top-k candidates to draw from  per negative sample (stochastic-hard-example-mining).
         # poolsize to draw top-k candidates from will be shem_poolsize * n_negative_samples.
         self.shem_poolsize = 10
 
-        self.pool_size = (7, 7) if self.dim == 2 else (7, 7, 3)
-        self.mask_pool_size = (14, 14) if self.dim == 2 else (14, 14, 5)
-        self.mask_shape = (28, 28) if self.dim == 2 else (28, 28, 10)
+        self.pool_size = (9, 9, 3)
+        self.mask_pool_size = (18, 18, 5)
+        self.mask_shape = (36, 36, 10)
 
         self.rpn_bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
         self.bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
@@ -305,7 +304,7 @@ class configs(DefaultConfigs):
 
         # n_proposals to be selected after NMS per batch element. too high numbers blow up memory if "detect_while_training" is True,
         # since proposals of the entire batch are forwarded through second stage in as one "batch".
-        self.roi_chunk_size = 2500 if self.dim == 2 else 600
+        self.roi_chunk_size = 2500 if self.dim == 2 else 150
         self.post_nms_rois_training = 500 if self.dim == 2 else 150
         self.post_nms_rois_inference = 500
 

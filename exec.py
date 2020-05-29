@@ -184,7 +184,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_source', type=str, default='experiments/platelet_exp',
                         help='specifies, from which source experiment to load configs and data_loader.')
     parser.add_argument('--no_benchmark', action='store_true', help="Do not use cudnn.benchmark.")
-    parser.add_argument('--cuda_device', type=int, default=0, help="Index of CUDA device to use.")
+    parser.add_argument('--cuda_device', type=int, default=1, help="Index of CUDA device to use.")
     parser.add_argument('-d', '--dev', default=False, action='store_true', help="development mode: shorten everything")
 
     args = parser.parse_args()
