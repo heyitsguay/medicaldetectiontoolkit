@@ -50,6 +50,9 @@ def get_train_generators(cf, logger):
     assert cf.n_train_val_data <= len(all_pids_list), \
         "requested {} train val samples, but dataset only has {} train val samples.".format(
             cf.n_train_val_data, len(all_pids_list))
+    if cf.n_train_val_data == 1:
+        train_pids = all_pids_list
+        val_pids = all_pids_list
     train_pids = all_pids_list[:int(3*cf.n_train_val_data//4)]
     val_pids = all_pids_list[int(np.ceil(3*cf.n_train_val_data//4)):cf.n_train_val_data]
 
@@ -203,15 +206,7 @@ class BatchGenerator(SlimDataLoaderBase):
 
         batch_data, batch_segs, batch_pids, batch_targets = [], [], [], []
         class_targets_list =  [v['class_target'] for (k, v) in self._data.items()]
-        # print('hello!')
-        class_targets_list[2] = [0, 1, 1]
-        # print(class_targets_list)
-        # print(self._data)
-        #samples patients towards equilibrium of foreground classes on a roi-level (after randomly sampling the ratio "batch_sample_slack).
         batch_ixs = get_batch_ixs(len(class_targets_list), self.batch_size)
-        # batch_ixs = dutils.get_class_balanced_patients(
-        #     class_targets_list, self.batch_size, self.cf.head_classes - 1, slack_factor=self.cf.batch_sample_slack)
-        # print(f'batch_ixs: {batch_ixs}')
         patients = list(self._data.items())
 
         for b in batch_ixs:
@@ -302,6 +297,9 @@ def copy_and_unpack_data(logger, pids, fold_dir, source_dir, target_dir):
 
 
 def get_batch_ixs(n_vols, batch_size):
+    print(n_vols)
+    if n_vols == 1:
+        return [0] * batch_size
     if batch_size <= n_vols:
         return list(np.random.choice(range(n_vols), size=batch_size, replace=False))
     else:
