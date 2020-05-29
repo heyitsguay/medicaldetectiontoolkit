@@ -32,7 +32,7 @@ class configs(DefaultConfigs):
         #########################
 
         self.root_dir = '/home/matthew/datasets/platelet-instance-3d'
-        self.min_volume = 20
+        self.min_volume = 100
 
         #########################
         #         I/O           #
@@ -53,7 +53,7 @@ class configs(DefaultConfigs):
         self.select_prototype_subset = None
         self.hold_out_test_set = True
         # including val set. will be 3/4 train, 1/4 val.
-        self.n_train_val_data = 8
+        self.n_train_val_data = 7
 
         # path to preprocessed data.
         self.input_df_name = 'info_df.pickle'
@@ -122,7 +122,7 @@ class configs(DefaultConfigs):
 
         self.num_epochs = 60
         self.num_train_batches = 50
-        self.batch_size = 4
+        self.batch_size = 2
 
         self.do_validation = True
         # decide whether to validate on entire patient volumes (like testing) or sampled patches (like training)
@@ -234,7 +234,7 @@ class configs(DefaultConfigs):
     def add_mrcnn_configs(self):
 
         # learning rate is a list with one entry per epoch.
-        self.learning_rate = [3e-4] * self.num_epochs
+        self.learning_rate = [5e-4] * self.num_epochs
 
         # disable mask head loss. (e.g. if no pixelwise annotations available)
         self.frcnn_mode = False
@@ -246,7 +246,7 @@ class configs(DefaultConfigs):
         self.return_masks_in_test = True
 
         # set number of proposal boxes to plot after each epoch.
-        self.n_plot_rpn_props = 0 if self.dim == 2 else 2
+        self.n_plot_rpn_props = 0 if self.dim == 2 else 1
 
         # number of classes for head networks: n_foreground_classes + 1 (background)
         self.head_classes = 2
@@ -265,7 +265,7 @@ class configs(DefaultConfigs):
         self.pyramid_levels = [0, 1, 2, 3]
 
         # number of feature maps in rpn. typically lowered in 3D to save gpu-memory.
-        self.n_rpn_features = 512 if self.dim == 2 else 256
+        self.n_rpn_features = 512 if self.dim == 2 else 192
 
         # anchor ratios and strides per position in feature maps.
         self.rpn_anchor_ratios = [0.5, 1., 2.]
@@ -278,15 +278,15 @@ class configs(DefaultConfigs):
         self.rpn_train_anchors_per_image = 100 #per batch element
         self.train_rois_per_image = 100 #per batch element
         self.roi_positive_ratio = 0.7
-        self.anchor_matching_iou = 0.7
+        self.anchor_matching_iou = 0.4
 
         # factor of top-k candidates to draw from  per negative sample (stochastic-hard-example-mining).
         # poolsize to draw top-k candidates from will be shem_poolsize * n_negative_samples.
-        self.shem_poolsize = 10
+        self.shem_poolsize = 5
 
-        self.pool_size = (9, 9, 3)
-        self.mask_pool_size = (18, 18, 5)
-        self.mask_shape = (36, 36, 10)
+        self.pool_size = (24, 24, 5)
+        self.mask_pool_size = (48, 48, 10)
+        self.mask_shape = (96, 96, 20)
 
         self.rpn_bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
         self.bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])

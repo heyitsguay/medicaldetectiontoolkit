@@ -70,8 +70,8 @@ def generate_dataset(cf):
     eval_image = io.imread(os.path.join(cf.root_dir, 'images', 'eval', '0000.tif'))
     images = {'train': train_image, 'eval': eval_image}
 
-    out_shape_z = 32
-    overlap = 8
+    out_shape_z = 40
+    overlap = 10
     dz = out_shape_z - overlap
 
     info = []
