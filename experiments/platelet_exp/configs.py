@@ -81,8 +81,8 @@ class configs(DefaultConfigs):
         self.n_channels = len(self.channels)
 
         # patch_size to be used for training. pre_crop_size is the patch_size before data augmentation.
-        self.pre_crop_size_3D = [362, 362, 40]
-        self.patch_size_3D = [362, 362, 40]
+        self.pre_crop_size_3D = [352, 352, 40]
+        self.patch_size_3D = [352, 352, 40]
 
         self.patch_size = self.patch_size_3D
         self.pre_crop_size = self.pre_crop_size_3D
@@ -120,9 +120,9 @@ class configs(DefaultConfigs):
         #  Schedule / Selection #
         #########################
 
-        self.num_epochs = 60
+        self.num_epochs = 500
         self.num_train_batches = 50
-        self.batch_size = 1
+        self.batch_size = 2
 
         self.do_validation = True
         # decide whether to validate on entire patient volumes (like testing) or sampled patches (like training)
@@ -135,7 +135,7 @@ class configs(DefaultConfigs):
 
         # set dynamic_lr_scheduling to True to apply LR scheduling with below settings.
         self.dynamic_lr_scheduling = True
-        self.lr_decay_factor = 0.7
+        self.lr_decay_factor = 0.8
         self.scheduling_patience = np.ceil(7200 / (self.num_train_batches * self.batch_size))
         self.scheduling_criterion = 'all_ap'
         self.scheduling_mode = 'min' if "loss" in self.scheduling_criterion else 'max'
@@ -153,7 +153,7 @@ class configs(DefaultConfigs):
 
         self.report_score_level = ['patient', 'rois']  # choose list from 'patient', 'rois'
         self.class_dict = {1: 'all'}  # 0 is background.
-        self.patient_class_of_interest = 1  # patient metrics are only plotted for one class.
+        self.patient_class_of_interest = 0  # patient metrics are only plotted for one class.
         self.ap_match_ious = [0.1, 0.5, 0.7, 0.8, 0.9]  # list of ious to be evaluated for ap-scoring.
 
         self.model_selection_criteria = ['all_ap']  # criteria to average over for saving epochs.
@@ -284,9 +284,9 @@ class configs(DefaultConfigs):
         # poolsize to draw top-k candidates from will be shem_poolsize * n_negative_samples.
         self.shem_poolsize = 5
 
-        self.pool_size = (45, 45, 5)
-        self.mask_pool_size = (90, 90, 10)
-        self.mask_shape = (180, 180, 20)
+        self.pool_size = (25, 25, 5)
+        self.mask_pool_size = (50, 50, 10)
+        self.mask_shape = (100, 100, 20)
 
         self.rpn_bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
         self.bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
@@ -304,7 +304,7 @@ class configs(DefaultConfigs):
 
         # n_proposals to be selected after NMS per batch element. too high numbers blow up memory if "detect_while_training" is True,
         # since proposals of the entire batch are forwarded through second stage in as one "batch".
-        self.roi_chunk_size = 2500 if self.dim == 2 else 150
+        self.roi_chunk_size = 2500 if self.dim == 2 else 300
         self.post_nms_rois_training = 500 if self.dim == 2 else 150
         self.post_nms_rois_inference = 500
 
