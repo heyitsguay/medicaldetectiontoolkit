@@ -70,9 +70,9 @@ def generate_dataset(cf):
     eval_image = io.imread(os.path.join(cf.root_dir, 'images', 'eval', '0000.tif'))
     images = {'train': train_image, 'eval': eval_image}
 
-    out_shape_z = 40
-    overlap = 10
-    dz = out_shape_z - overlap
+    out_shape = (40, 352, 352)
+    overlap = (10, 150, 150)
+    d_shape = [s - o for s, o in zip(out_shape, overlap)]
 
     info = []
     pid = 0
@@ -89,14 +89,24 @@ def generate_dataset(cf):
             os.makedirs(save_dir, exist_ok=False)
 
             image = images[subset]
-            dim_z = image.shape[0]
-            zs = list(range(0, dim_z - out_shape_z, dz))
-            if dim_z - out_shape_z not in zs:
-                zs.append(dim_z-out_shape_z)
+            coords = []
+            for i in range(3):
+                dim_i = image.shape[i]
+                cs = list(range(0, dim_i - out_shape[i], d_shape[i]))
+                if dim_i - out_shape[i] not in cs:
+                    cs.append(dim_i - out_shape[i])
+                coords.append(cs)
+            zs, ys, xs = coords
             for z in zs:
-                z_range = slice(z, z + out_shape_z)
-                info += [[save_dir, pid, image[z_range], labels[z_range],
-                          label_type == 'cell', cf.min_volume]]
+                z_range = slice(z, z + out_shape[0])
+                for y in ys:
+                    y_range = slice(y, y + out_shape[1])
+                    for x in xs:
+                        x_range = slice(x, x + out_shape[2])
+                        im = image[z_range, y_range, x_range]
+                        lb = labels[z_range, y_range, x_range]
+                        info += [[save_dir, pid, im, lb,
+                                  label_type == 'cell', cf.min_volume]]
                 pid += 1
 
     print('starting creation of {} images'.format(len(info)))
