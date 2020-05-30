@@ -53,7 +53,7 @@ class configs(DefaultConfigs):
         self.select_prototype_subset = None
         self.hold_out_test_set = True
         # including val set. will be 3/4 train, 1/4 val.
-        self.n_train_val_data = 1
+        self.n_train_val_data = 7 
 
         # path to preprocessed data.
         self.input_df_name = 'info_df.pickle'

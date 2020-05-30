@@ -259,9 +259,8 @@ class PatientBatchIterator(SlimDataLoaderBase):
         all_data = np.load(patient['data'], mmap_mode='r')
         data = all_data[0]
         seg = all_data[1].astype('uint8')
-        # batch_class_targets = np.array([patient['class_target']])
-        batch_class_targets = patient['class_target']
-
+        batch_class_targets = np.array([patient['class_target']*seg.max()])
+        #batch_class_targets = patient['class_target']
         out_data = data[None, None]
         out_seg = seg[None, None]
 
@@ -273,7 +272,7 @@ class PatientBatchIterator(SlimDataLoaderBase):
         batch_3D.update({'patient_bb_target': batch_3D['bb_target'],
                          'patient_roi_labels': batch_3D['class_target'],
                          'original_img_shape': out_data.shape})
-
+        print(batch_3D['class_target'])
         self.patient_ix += 1
         if self.patient_ix == len(self.dataset_pids):
             self.patient_ix = 0
