@@ -43,13 +43,10 @@ def get_class_balanced_patients(class_targets, batch_size, num_classes, slack_fa
             cand = np.random.choice(len(class_targets), 1)[0]
             # check the least occuring class among this patient's rois.
             tmp_weakest_class = np.argmin([class_targets[cand].count(ii) for ii in range(num_classes)])
-            if i % 50000 == 49999:
-                print(tmp_weakest_class)
             # if current batch already bigger than the slack_factor ratio, then
             # check that weakest class in this patient is not the weakest in current batch (since needs to be boosted)
             # also that at least one roi of this patient belongs to weakest class. If True, keep patient, else keep looking.
             if (tmp_weakest_class != weakest_class and class_targets[cand].count(weakest_class) > 0) or ix < int(batch_size * slack_factor):
-                print('oh shoot it happened')
                 keep_looking = False
 
         for c in range(num_classes):

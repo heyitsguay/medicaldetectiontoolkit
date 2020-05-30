@@ -16,7 +16,7 @@
 
 import sys
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+#os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import numpy as np
 from default_configs import DefaultConfigs
@@ -32,7 +32,7 @@ class configs(DefaultConfigs):
         #    Preprocessing      #
         #########################
 
-        self.root_dir = '/home/matthew/datasets/toy_mdt'
+        self.root_dir = '/home/guaymd/data/data/mdt'
 
         #########################
         #         I/O           #

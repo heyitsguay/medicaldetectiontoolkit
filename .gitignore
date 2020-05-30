@@ -12,5 +12,7 @@ __pycache__/*
 output/*
 */output/*
 .idea/*
+*/mdt/*
+mdt/*
 
 !/assets/*

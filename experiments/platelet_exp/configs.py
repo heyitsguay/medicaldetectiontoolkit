@@ -31,7 +31,7 @@ class configs(DefaultConfigs):
         #    Preprocessing      #
         #########################
 
-        self.root_dir = '/home/matthew/datasets/platelet-instance-3d'
+        self.root_dir = '/home/guaymd/data/data/mdt/platelet-instance-3d'
         self.min_volume = 100
 
         #########################
