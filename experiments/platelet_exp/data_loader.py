@@ -51,10 +51,11 @@ def get_train_generators(cf, logger):
         "requested {} train val samples, but dataset only has {} train val samples.".format(
             cf.n_train_val_data, len(all_pids_list))
     if cf.n_train_val_data == 1:
-        train_pids = all_pids_list
-        val_pids = all_pids_list
-    train_pids = all_pids_list[:int(3*cf.n_train_val_data//4)]
-    val_pids = all_pids_list[int(np.ceil(3*cf.n_train_val_data//4)):cf.n_train_val_data]
+        train_pids = all_pids_list[:1]
+        val_pids = all_pids_list[:1]
+    else:
+        train_pids = all_pids_list[:int(3*cf.n_train_val_data//4)]
+        val_pids = all_pids_list[int(np.ceil(3*cf.n_train_val_data//4)):cf.n_train_val_data]
 
     train_data = {k: v for (k, v) in all_data.items() if any(p == v['pid'] for p in train_pids)}
     val_data = {k: v for (k, v) in all_data.items() if any(p == v['pid'] for p in val_pids)}
@@ -297,7 +298,6 @@ def copy_and_unpack_data(logger, pids, fold_dir, source_dir, target_dir):
 
 
 def get_batch_ixs(n_vols, batch_size):
-    print(n_vols)
     if n_vols == 1:
         return [0] * batch_size
     if batch_size <= n_vols:
