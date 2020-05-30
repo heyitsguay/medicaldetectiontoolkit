@@ -81,8 +81,8 @@ class configs(DefaultConfigs):
         self.n_channels = len(self.channels)
 
         # patch_size to be used for training. pre_crop_size is the patch_size before data augmentation.
-        self.pre_crop_size_3D = [288, 288, 40]
-        self.patch_size_3D = [288, 288, 40]
+        self.pre_crop_size_3D = [362, 362, 40]
+        self.patch_size_3D = [362, 362, 40]
 
         self.patch_size = self.patch_size_3D
         self.pre_crop_size = self.pre_crop_size_3D
@@ -104,7 +104,7 @@ class configs(DefaultConfigs):
         #      Architecture      #
         #########################
 
-        self.start_filts = 48 if self.dim == 2 else 24
+        self.start_filts = 48 if self.dim == 2 else 32
         self.end_filts = self.start_filts * 4 if self.dim == 2 else self.start_filts * 2
         self.res_architecture = 'resnet50' # 'resnet101', 'resnet50'
         self.norm = None # one of None, 'instance_norm', 'batch_norm'
@@ -265,7 +265,7 @@ class configs(DefaultConfigs):
         self.pyramid_levels = [0, 1, 2, 3]
 
         # number of feature maps in rpn. typically lowered in 3D to save gpu-memory.
-        self.n_rpn_features = 512 if self.dim == 2 else 192
+        self.n_rpn_features = 512 if self.dim == 2 else 256
 
         # anchor ratios and strides per position in feature maps.
         self.rpn_anchor_ratios = [0.5, 1., 2.]
@@ -284,9 +284,9 @@ class configs(DefaultConfigs):
         # poolsize to draw top-k candidates from will be shem_poolsize * n_negative_samples.
         self.shem_poolsize = 5
 
-        self.pool_size = (24, 24, 5)
-        self.mask_pool_size = (48, 48, 10)
-        self.mask_shape = (96, 96, 20)
+        self.pool_size = (45, 45, 5)
+        self.mask_pool_size = (90, 90, 10)
+        self.mask_shape = (180, 180, 20)
 
         self.rpn_bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
         self.bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
