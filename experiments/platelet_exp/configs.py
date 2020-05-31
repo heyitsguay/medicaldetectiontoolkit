@@ -153,7 +153,7 @@ class configs(DefaultConfigs):
 
         self.report_score_level = ['patient', 'rois']  # choose list from 'patient', 'rois'
         self.class_dict = {1: 'benign'}  # 0 is background.
-        self.patient_class_of_interest = 0  # patient metrics are only plotted for one class.
+        self.patient_class_of_interest = 1  # patient metrics are only plotted for one class.
         self.ap_match_ious = [0.1, 0.5, 0.7, 0.8, 0.9]  # list of ious to be evaluated for ap-scoring.
 
         self.model_selection_criteria = ['benign_ap']  # criteria to average over for saving epochs.
@@ -305,11 +305,11 @@ class configs(DefaultConfigs):
         # n_proposals to be selected after NMS per batch element. too high numbers blow up memory if "detect_while_training" is True,
         # since proposals of the entire batch are forwarded through second stage in as one "batch".
         self.roi_chunk_size = 2500 if self.dim == 2 else 300
-        self.post_nms_rois_training = 500 if self.dim == 2 else 150
-        self.post_nms_rois_inference = 500
+        self.post_nms_rois_training = 500 if self.dim == 2 else 250
+        self.post_nms_rois_inference = 1500
 
         # Final selection of detections (refine_detections)
-        self.model_max_instances_per_batch_element = 80  # per batch element and class.
+        self.model_max_instances_per_batch_element = 100  # per batch element and class.
         self.detection_nms_threshold = 1e-2  # needs to be > 0, otherwise all predictions are one cluster.
         self.model_min_confidence = 0.1
 
