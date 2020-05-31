@@ -234,7 +234,7 @@ class configs(DefaultConfigs):
     def add_mrcnn_configs(self):
 
         # learning rate is a list with one entry per epoch.
-        self.learning_rate = [5e-4] * self.num_epochs
+        self.learning_rate = [1e-4] * self.num_epochs
 
         # disable mask head loss. (e.g. if no pixelwise annotations available)
         self.frcnn_mode = False
