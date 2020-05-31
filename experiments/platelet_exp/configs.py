@@ -284,9 +284,9 @@ class configs(DefaultConfigs):
         # poolsize to draw top-k candidates from will be shem_poolsize * n_negative_samples.
         self.shem_poolsize = 5
 
-        self.pool_size = (25, 25, 5)
-        self.mask_pool_size = (50, 50, 10)
-        self.mask_shape = (100, 100, 20)
+        self.pool_size = (11, 11, 5)
+        self.mask_pool_size = (22, 22, 10)
+        self.mask_shape = (44, 44, 20)
 
         self.rpn_bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])
         self.bbox_std_dev = np.array([0.1, 0.1, 0.1, 0.2, 0.2, 0.2])

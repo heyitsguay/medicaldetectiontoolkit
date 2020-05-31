@@ -190,7 +190,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     folds = [0]
     label_type = 'organelle'
-    args.exp_dir = f'./output/platelet_{label_type}'
+    args.exp_dir = f'./output/platelet_{label_type}_overfit'
 
     torch.backends.cudnn.benchmark = not args.no_benchmark
 
