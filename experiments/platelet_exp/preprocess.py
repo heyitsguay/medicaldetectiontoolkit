@@ -77,8 +77,8 @@ def generate_dataset(cf):
     info = []
     pid = 0
     for label_type in ['cell', 'organelle']:
-        pid = 0
         for subset in ['train', 'eval']:
+            pid = 0
             ss = 'train' if subset == 'train' else 'test'
             labels = io.imread(os.path.join(cf.root_dir, 'annotations', subset, label_type, '0000.tif')).astype(np.uint16)
             labels = zoom(labels, (4, 1, 1), order=0)
@@ -107,7 +107,7 @@ def generate_dataset(cf):
                         lb = labels[z_range, y_range, x_range]
                         info += [[save_dir, pid, im, lb,
                                   label_type == 'cell', cf.min_volume]]
-                pid += 1
+                        pid += 1
 
     print('starting creation of {} images'.format(len(info)))
     if DO_MP:

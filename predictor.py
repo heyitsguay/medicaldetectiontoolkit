@@ -342,9 +342,6 @@ class Predictor:
                  - 'seg_preds': pixel-wise predictions. (b, 1, y, x, (z))
                  - losses (only in validation mode)
         """
-        print(self.patched_patient)
-        print(batch['patch_crop_coords'])
-        print(batch)
         patch_crops = batch['patch_crop_coords'] if self.patched_patient else None
         results_list = [self.spatial_tiling_forward(batch, patch_crops)]
         org_img_shape = batch['original_img_shape']

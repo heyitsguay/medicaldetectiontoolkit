@@ -53,7 +53,7 @@ class configs(DefaultConfigs):
         self.select_prototype_subset = None
         self.hold_out_test_set = True
         # including val set. will be 3/4 train, 1/4 val.
-        self.n_train_val_data = 7 
+        self.n_train_val_data = 112 
 
         # path to preprocessed data.
         self.input_df_name = 'info_df.pickle'
@@ -120,9 +120,9 @@ class configs(DefaultConfigs):
         #  Schedule / Selection #
         #########################
 
-        self.num_epochs = 500
-        self.num_train_batches = 50
-        self.batch_size = 2
+        self.num_epochs = 100
+        self.num_train_batches = 112
+        self.batch_size = 1
 
         self.do_validation = True
         # decide whether to validate on entire patient volumes (like testing) or sampled patches (like training)
@@ -137,7 +137,7 @@ class configs(DefaultConfigs):
         self.dynamic_lr_scheduling = True
         self.lr_decay_factor = 0.8
         self.scheduling_patience = np.ceil(7200 / (self.num_train_batches * self.batch_size))
-        self.scheduling_criterion = 'all_ap'
+        self.scheduling_criterion = 'benign_ap'
         self.scheduling_mode = 'min' if "loss" in self.scheduling_criterion else 'max'
 
         #########################
@@ -152,11 +152,11 @@ class configs(DefaultConfigs):
         self.min_save_thresh = 0 if self.dim == 2 else 0
 
         self.report_score_level = ['patient', 'rois']  # choose list from 'patient', 'rois'
-        self.class_dict = {1: 'all'}  # 0 is background.
+        self.class_dict = {1: 'benign'}  # 0 is background.
         self.patient_class_of_interest = 0  # patient metrics are only plotted for one class.
         self.ap_match_ious = [0.1, 0.5, 0.7, 0.8, 0.9]  # list of ious to be evaluated for ap-scoring.
 
-        self.model_selection_criteria = ['all_ap']  # criteria to average over for saving epochs.
+        self.model_selection_criteria = ['benign_ap']  # criteria to average over for saving epochs.
         self.min_det_thresh = 0.1  # minimum confidence value to select predictions for evaluation.
 
         # threshold for clustering predictions together (wcs = weighted cluster scoring).
