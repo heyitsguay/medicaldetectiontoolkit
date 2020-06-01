@@ -25,7 +25,7 @@ def lcimb_predict(save_file, exp_dir, weight_dir, x_path, cmap='prism'):
     logger = utils.get_logger(cf.exp_dir, False)
     model = utils.import_module('module', cf.model_path)
     net = model.net(cf, logger).cuda()
-    net.load_state_dict(torch.load(os.path.join('weight_dir', 'params.pth')))
+    net.load_state_dict(torch.load(os.path.join(weight_dir, 'params.pth')))
 
     x = np.load(x_path)
     img_rgb = np.stack([x.astype(np.float32)]*3, axis=0)
