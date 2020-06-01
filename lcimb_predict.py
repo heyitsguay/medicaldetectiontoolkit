@@ -67,18 +67,18 @@ def lcimb_predict(save_file, exp_dir, weight_path, x_path, cmap='prism'):
             img_rgb[reg, :] = 0.5 * mask_rgb[reg, :] + 0.5 * img_rgb[reg, :]
     img_out = np.clip(255 * img_rgb, 0, 255).astype(np.uint8)
     os.makedirs(os.path.dirname(save_file), exist_ok=True)
-    plt.imsave(save_file, img_out)
+    np.save(save_file, img_out)
     return img_out
 
 
 if __name__ == '__main__':
     args = sys.argv
-    save_file = args[0]
-    exp_dir = args[1]
-    weight_path = args[2]
-    x_path = args[3]
-    if len(args) > 4:
-        cmap = args[4]
+    save_file = args[1]
+    exp_dir = args[2]
+    weight_path = args[3]
+    x_path = args[4]
+    if len(args) > 5:
+        cmap = args[5]
     else:
         cmap = 'prism'
     lcimb_predict(save_file, exp_dir, weight_path, x_path, cmap)
