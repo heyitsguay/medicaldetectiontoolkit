@@ -12,10 +12,12 @@ import utils.exp_utils as utils
 import utils.model_utils as mutils
 
 
-def lcimb_predict(save_file, exp_dir, weight_dir, x_path, cmap='prism'):
+def lcimb_predict(save_file, exp_dir, weight_path, x_path, cmap='prism'):
     """
+
     :param save_file:
     :param exp_dir:
+    :param weight_path:
     :param x_path:
     :param cmap:
     :return:
@@ -25,7 +27,7 @@ def lcimb_predict(save_file, exp_dir, weight_dir, x_path, cmap='prism'):
     logger = utils.get_logger(cf.exp_dir, False)
     model = utils.import_module('module', cf.model_path)
     net = model.net(cf, logger).cuda()
-    net.load_state_dict(torch.load(os.path.join(weight_dir, 'params.pth')))
+    net.load_state_dict(torch.load(weight_path))
 
     x = np.load(x_path)
     img_rgb = np.stack([x.astype(np.float32)]*3, axis=0)
@@ -73,9 +75,10 @@ if __name__ == '__main__':
     args = sys.argv
     save_file = args[0]
     exp_dir = args[1]
-    x_path = args[2]
-    if len(args) > 3:
-        cmap = args[3]
+    weight_path = args[2]
+    x_path = args[3]
+    if len(args) > 4:
+        cmap = args[4]
     else:
         cmap = 'prism'
-    lcimb_predict(save_file, exp_dir, x_path, cmap)
+    lcimb_predict(save_file, exp_dir, weight_path, x_path, cmap)
