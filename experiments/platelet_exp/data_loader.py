@@ -207,7 +207,7 @@ class BatchGenerator(SlimDataLoaderBase):
 
         batch_data, batch_segs, batch_pids, batch_targets = [], [], [], []
         class_targets_list =  [v['class_target'] for (k, v) in self._data.items()]
-        batch_ixs = [9]*self.batch_size  #get_batch_ixs(len(class_targets_list), self.batch_size)
+        batch_ixs = get_batch_ixs(len(class_targets_list), self.batch_size)
         patients = list(self._data.items())
 
         for b in batch_ixs:
