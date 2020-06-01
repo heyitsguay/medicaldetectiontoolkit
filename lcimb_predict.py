@@ -2,6 +2,7 @@
 
 """
 import os
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -65,3 +66,15 @@ def lcimb_predict(save_file, exp_dir, x_path, cmap='prism'):
     os.makedirs(os.path.dirname(save_file), exist_ok=True)
     plt.imsave(save_file, img_out)
     return img_out
+
+
+if __name__ == '__main__':
+    args = sys.argv
+    save_file = args[0]
+    exp_dir = args[1]
+    x_path = args[2]
+    if len(args) > 3:
+        cmap = args[3]
+    else:
+        cmap = 'prism'
+    lcimb_predict(save_file, exp_dir, x_path, cmap)
